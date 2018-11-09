@@ -9,10 +9,11 @@ namespace GeekDay
 {
     class Program
     {
-        static Thread httpThread = new Thread(new ThreadStart(HttpThead));
+        static Thread httpThread = new Thread(new ThreadStart(HttpThread));
 
-        static void HttpThead() {
+        static void HttpThread() {
             HTTPRequester hr = new HTTPRequester();
+            Thread.Sleep(150);
             hr.Start();
         }
 

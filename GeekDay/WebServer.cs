@@ -25,7 +25,7 @@ namespace GeekDay
             foreach (string s in prefixes)
                 _listener.Prefixes.Add(s);
 
-            _responderMethod = method ?? throw new ArgumentException("method");
+            _responderMethod = method;// ?? throw new ArgumentException("method");
             _listener.Start();
         }
 
