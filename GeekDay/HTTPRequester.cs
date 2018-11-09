@@ -8,18 +8,6 @@ namespace GeekDay
     {
         private WebServer webServer;
 
-        public HTTPRequester()
-        {
-<<<<<<< HEAD
-            try {
-            } catch {
-
-            }
-=======
-            webServer = new WebServer(SendResponse, "http://192.168.1.79:8080/");
->>>>>>> 6a01f9a5f24d5dfa0302bea6e13a3bff39198399
-        }
-
         public void Start()
         {
             webServer = new WebServer(SendResponse, "http://192.168.1.81:8080/");
@@ -34,9 +22,8 @@ namespace GeekDay
 
         private string SendResponse(HttpListenerRequest request)
         {
-<<<<<<< HEAD
             try {
-                Console.WriteLine(request.RawUrl.ToString() + "\n###");
+                ShowDatas(request);
                 foreach (string item in request.Url.Segments)
                 {
                     Console.WriteLine(item);
@@ -57,9 +44,6 @@ namespace GeekDay
 
             }
             Console.WriteLine("!!!Got request!!!");
-=======
-            ShowDatas(request);
->>>>>>> 6a01f9a5f24d5dfa0302bea6e13a3bff39198399
             return "";
         }
         List<string> SplitUrl(string url)
