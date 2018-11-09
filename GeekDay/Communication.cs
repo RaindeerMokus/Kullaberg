@@ -30,18 +30,9 @@ namespace GeekDay
                 
                 Console.WriteLine();
                 Console.WriteLine("DataStart----------------------------------------------------");
-                foreach (var item in data)
-                {
-                    Console.Write(item.ToString());
-                }
-                Console.WriteLine(System.Text.Encoding.UTF8.GetString(data));
+                string datastring = System.Text.Encoding.UTF8.GetString(data);
+                Console.WriteLine(datastring);
                 Console.WriteLine("DataEnd----------------------------------------------------");
-                Console.WriteLine();
-                /*Console.WriteLine(str);*/
-                foreach (var item in MyClass.Desserialize(data))
-                {
-                    Console.WriteLine(item);
-                }
                 Console.WriteLine();
                 //udpServer.Send(new byte[] { 1 }, 1, remoteEP); // if data is received reply letting the client know that we got his data          
                 Console.ReadLine();
