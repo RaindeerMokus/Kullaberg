@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace GeekDay
@@ -9,10 +10,14 @@ namespace GeekDay
 
         public HTTPRequester()
         {
+<<<<<<< HEAD
             try {
             } catch {
 
             }
+=======
+            webServer = new WebServer(SendResponse, "http://192.168.1.79:8080/");
+>>>>>>> 6a01f9a5f24d5dfa0302bea6e13a3bff39198399
         }
 
         public void Start()
@@ -29,6 +34,7 @@ namespace GeekDay
 
         private string SendResponse(HttpListenerRequest request)
         {
+<<<<<<< HEAD
             try {
                 Console.WriteLine(request.RawUrl.ToString() + "\n###");
                 foreach (string item in request.Url.Segments)
@@ -51,7 +57,28 @@ namespace GeekDay
 
             }
             Console.WriteLine("!!!Got request!!!");
+=======
+            ShowDatas(request);
+>>>>>>> 6a01f9a5f24d5dfa0302bea6e13a3bff39198399
             return "";
+        }
+        List<string> SplitUrl(string url)
+        {
+            List<string> ret = new List<string>();
+            var values=  url.Split('?')[1].Split('&');
+            foreach (var item in values)
+            {
+                ret.Add(item.Split('=')[1]);
+            }
+            return ret;
+        }
+        void ShowDatas(HttpListenerRequest request)
+        {
+            Console.WriteLine(request.Url.ToString());
+            foreach (var item in SplitUrl(request.Url.ToString()))
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }
