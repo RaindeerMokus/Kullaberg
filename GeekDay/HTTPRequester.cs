@@ -8,10 +8,9 @@ namespace GeekDay
     {
         private WebServer webServer;
 
-        public void Start()
+        public void Start(string url)
         {
-            webServer = new WebServer(SendResponse, "http://192.168.1.81:8080/");
-            Console.WriteLine("SAJT");
+            webServer = new WebServer(SendResponse, url);
             webServer.Run();
         }
 
@@ -20,25 +19,25 @@ namespace GeekDay
             webServer.Stop();
         }
 
-        private string SendResponse(HttpListenerRequest request)
+        private String ApuOttEgyBenzinkut(string squadMoney) {
+            int punci = int.Parse(squadMoney);
+            int pala = punci / 600;
+            punci -= pala*600;
+            int rugo = punci/50;
+            punci -= rugo*50;
+            int peasant = punci/20;
+            punci -= peasant*20;
+            return "{\n\t\"Names\": [\n\t\t\"Paladin\"" + (rugo > 0 ? ",\n\t\t\"Rogue\"":"") + (peasant > 0 ? ",\n\t\t\"Peasant\"":"") + "\n\t]," + 
+                "\n\t\"Numbers\": [" + "\n\t\t" + pala + (rugo > 0 ? (",\n\t\t" + rugo):"") + (peasant > 0 ? (",\n\t\t" + peasant):"") + "\n\t]\n}";
+        }
+
+        public string SendResponse(HttpListenerRequest request)
         {
             try {
                 string req = ShowDatas(request);
-                foreach (string item in request.Url.Segments)
-                {
-                    Console.WriteLine(item);
-                }
                 if (req.Split('\n').Length == 1) {
-                    Console.WriteLine(request.RawUrl.ToString());
-                    int punci = int.Parse(request.Headers.Get("squadMoney"));
-                    int pala = punci / 600;
-                    punci -= pala*600;
-                    int rugo = punci/50;
-                    punci -= rugo*50;
-                    int peasant = punci/20;
-                    punci -= peasant*20;
-                    return "{\n\t\"Names\": [\n\t\t\"Paladin\"" + (rugo > 0 ? ",\n\t\t\"Rogue\"":"") + (peasant > 0 ? ",\n\t\t\"Peasant\"":"") + "\n\t]," + 
-                        "\n\t\"Numbers\": [" + "\n\t\t" + pala + (rugo > 0 ? (",\n\t\t" + rugo):"") + (peasant > 0 ? (",\n\t\t" + peasant):"") + "\n\t]\n}";
+                    Console.WriteLine(ApuOttEgyBenzinkut);
+                    return ApuOttEgyBenzinkut(request.Headers.Get("squadMoney"));
                 } else {
                     Console.WriteLine("GYÖGYŐ IDE ÍRHATSZ BASZOD OK?");
                 }
