@@ -23,12 +23,12 @@ namespace GeekDay
         private string SendResponse(HttpListenerRequest request)
         {
             try {
-                ShowDatas(request);
+                string req = ShowDatas(request);
                 foreach (string item in request.Url.Segments)
                 {
                     Console.WriteLine(item);
                 }
-                if (request.Headers.AllKeys.Length == 1) {
+                if (req.Split('\n').Length == 1) {
                     Console.WriteLine(request.RawUrl.ToString());
                     int punci = int.Parse(request.Headers.Get("squadMoney"));
                     int pala = punci / 600;
@@ -39,6 +39,8 @@ namespace GeekDay
                     punci -= peasant*20;
                     return "{\n\t\"Names\": [\n\t\t\"Paladin\"" + (rugo > 0 ? ",\n\t\t\"Rogue\"":"") + (peasant > 0 ? ",\n\t\t\"Peasant\"":"") + "\n\t]," + 
                         "\n\t\"Numbers\": [" + "\n\t\t" + pala + (rugo > 0 ? (",\n\t\t" + rugo):"") + (peasant > 0 ? (",\n\t\t" + peasant):"") + "\n\t]\n}";
+                } else {
+                    Console.WriteLine("GYÖGYŐ IDE ÍRHATSZ BASZOD OK?");
                 }
             } catch(Exception e) {
 
@@ -56,13 +58,16 @@ namespace GeekDay
             }
             return ret;
         }
-        void ShowDatas(HttpListenerRequest request)
+        string ShowDatas(HttpListenerRequest request)
         {
+            string returnn = "";
             Console.WriteLine(request.Url.ToString());
             foreach (var item in SplitUrl(request.Url.ToString()))
             {
                 Console.WriteLine(item);
+                returnn += item + "\n";
             }
+            return returnn;
         }
     }
 }
