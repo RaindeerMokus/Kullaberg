@@ -34,6 +34,7 @@ namespace GeekDay
                 {
                     Console.Write(item.ToString());
                 }
+                Console.WriteLine(System.Text.Encoding.UTF8.GetString(data));
                 Console.WriteLine("DataEnd----------------------------------------------------");
                 Console.WriteLine();
                 /*Console.WriteLine(str);*/
@@ -83,8 +84,9 @@ namespace GeekDay
                             Datas.Add(reader.ReadString());
                         }
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        Console.WriteLine("\n"+e.StackTrace+"\n" + e.ToString());
                         return Datas; 
                     }
                 }
