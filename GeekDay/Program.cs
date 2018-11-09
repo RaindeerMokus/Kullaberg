@@ -11,7 +11,7 @@ namespace GeekDay
         static void Main(string[] args)
         {
             Communication communication = new Communication();
-            communication.Connect();
+            communication.Connect(6969);
         }
     }
 }

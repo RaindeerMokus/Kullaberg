@@ -14,17 +14,27 @@ namespace GeekDay
         {
             Console.WriteLine("Done..");
         }
-        public void Connect()
+        public void Connect(int port)
         {
-            
-            UdpClient udpServer = new UdpClient(6969);
+                
 
+            UdpClient udpServer = new UdpClient(port);
+            Console.ForegroundColor = ConsoleColor.Green;
             while (true)
             {
-                var remoteEP = new IPEndPoint(IPAddress.Any, 6969);
-                var data = udpServer.Receive(ref remoteEP); // listen on port 11000
-                Console.Write("receive data from " + remoteEP.ToString());
-                //udpServer.Send(new byte[] { 1 }, 1, remoteEP); // reply back
+                var remoteEP = new IPEndPoint(IPAddress.Any, port);
+                var data = udpServer.Receive(ref remoteEP);
+                //  Console.WriteLine(data.ToString());
+                Console.WriteLine( );
+                Console.WriteLine("DataStart----------------------------------------------------");
+                foreach (var item in data)
+                {
+                    Console.Write(item.ToString());
+                }
+                Console.WriteLine("DataEnd----------------------------------------------------");
+                Console.WriteLine();
+                //udpServer.Send(new byte[] { 1 }, 1, remoteEP); // if data is received reply letting the client know that we got his data          
+                Console.ReadLine();
             }
         }
 
