@@ -9,7 +9,7 @@ namespace GeekDay
     public class HTTPRequester {
         private WebServer ws;
         public HTTPRequester() {
-            this.ws = new WebServer(SendResponse, "http://192.168.1.81:8080/");
+            this.ws = new WebServer(SendResponse, "http://localhost:8080/");
         }
 
         public void Start() {
