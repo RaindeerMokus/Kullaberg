@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace GeekDay
@@ -9,7 +10,7 @@ namespace GeekDay
 
         public HTTPRequester()
         {
-            webServer = new WebServer(SendResponse, "http://192.168.1.119:8080/");
+            webServer = new WebServer(SendResponse, "http://192.168.1.79:8080/");
         }
 
         public void Start()
@@ -25,9 +26,26 @@ namespace GeekDay
 
         private string SendResponse(HttpListenerRequest request)
         {
-            Console.WriteLine(request.HttpMethod.ToString());
-            Console.WriteLine("!!!Got request!!!");
+            ShowDatas(request);
             return "";
+        }
+        List<string> SplitUrl(string url)
+        {
+            List<string> ret = new List<string>();
+            var values=  url.Split('?')[1].Split('&');
+            foreach (var item in values)
+            {
+                ret.Add(item.Split('=')[1]);
+            }
+            return ret;
+        }
+        void ShowDatas(HttpListenerRequest request)
+        {
+            Console.WriteLine(request.Url.ToString());
+            foreach (var item in SplitUrl(request.Url.ToString()))
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }

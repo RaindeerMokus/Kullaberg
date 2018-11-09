@@ -10,40 +10,32 @@ using System.Threading.Tasks;
 
 namespace GeekDay
 {
-    class Communication
+    public class Communication
     {
-        public Communication()
+        public static List<Dictionary<string, object>> UnitsValues(int port)
         {
-            Console.WriteLine("Done..");
-        }
-        public void Connect(int port)
-        {
-
-
             UdpClient udpServer = new UdpClient(port);
             Console.ForegroundColor = ConsoleColor.Green;
-            while (true)
+            List<Dictionary<string, object>> ret = new List<Dictionary<string, object>>();
+            bool again = false;
+            while (!again)
             {
                 var remoteEP = new IPEndPoint(IPAddress.Any, port);
                 var data = udpServer.Receive(ref remoteEP);
-                Console.WriteLine();
-                Console.WriteLine("DataStart----------------------------------------------------");
                 StreamReader reader = new StreamReader(new MemoryStream(data), Encoding.Default);
-                Dictionary<string, object> actual = new JsonSerializer().Deserialize<Dictionary<string, object>>(new JsonTextReader(reader));
-
-                foreach (var item in actual)
+                Dictionary<string, object> a = new JsonSerializer().Deserialize<Dictionary<string, object>>(new JsonTextReader(reader));
+                foreach (var item in ret)
                 {
-                    Console.WriteLine(item.Key+":"+item.Value);
+                    if (item.Where(x => x.Key == "ID").FirstOrDefault().Value.ToString() == a.Where(x => x.Key == "ID").FirstOrDefault().Value.ToString())
+                    {
+                        again = true;
+                        break;
+                    }
                 }
-                Console.WriteLine("DataEnd----------------------------------------------------");
-                Console.WriteLine();
-                Console.ReadLine();
+                if (!again) ret.Add(a);
             }
+            return ret;
         }
 
-    }
-    public class Json
-    {
-      
     }
 }
