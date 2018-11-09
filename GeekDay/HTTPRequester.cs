@@ -1,32 +1,33 @@
 using System;
 using System.Net;
-using System.Threading;
-using System.Linq;
-using System.Text;
 
 namespace GeekDay
 {
-    public class HTTPRequester {
-        private WebServer ws;
-        public HTTPRequester() {
-            this.ws = new WebServer(SendResponse, "http://localhost:8080/");
+    public class HTTPRequester
+    {
+        private WebServer webServer;
+
+        public HTTPRequester()
+        {
+            webServer = new WebServer(SendResponse, "http://192.168.1.119:8080/");
         }
 
-        public void Start() {
+        public void Start()
+        {
             Console.WriteLine("SAJT");
-            ws.Run();
-        }
-        public void Stop() {
-            ws.Stop();
+            webServer.Run();
         }
 
-        private string SendResponse(HttpListenerRequest request) {
-            Console.WriteLine(request.HttpMethod);
-            Console.WriteLine("Sajt");
+        public void Stop()
+        {
+            webServer.Stop();
+        }
+
+        private string SendResponse(HttpListenerRequest request)
+        {
+            Console.WriteLine(request.HttpMethod.ToString());
+            Console.WriteLine("!!!Got request!!!");
             return "";
-        }  
+        }
     }
-
-    
-
 }
