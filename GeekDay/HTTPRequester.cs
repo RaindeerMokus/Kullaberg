@@ -97,11 +97,10 @@ namespace GeekDay
                 if (spittedUrl.Count == 1) {
                     return ApuOttEgyBenzinkut(spittedUrl[0]);
                 }
-                else
+                else if (spittedUrl.Count == 3)
                 {
                     Logic logic = new Logic(6969);
-                    var vs = SplitUrl(request.Url.ToString());
-                    return logic.Move(vs[0],vs[1],vs[2]);
+                    return logic.Move(spittedUrl[0],spittedUrl[1],spittedUrl[2]);
                 }
             }
             catch (Exception e)

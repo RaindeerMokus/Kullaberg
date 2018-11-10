@@ -73,6 +73,11 @@ namespace GeekDay
         {
             return y * width + x;
         }
+        public Point IdToPoint(int id) {
+            int x = id % width;
+            int y = (id - x) / width;
+            return new Point(x, y);
+        }
         public Dictionary<int, int> Fields(int point, int distance)
         {
             Dictionary<int, int> distacnes = new Dictionary<int, int>();
