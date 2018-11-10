@@ -47,13 +47,19 @@ namespace GeekDay
                             {
                                 string rstr = _responderMethod(ctx.Request);
                                 byte[] buf = Encoding.UTF8.GetBytes(rstr);
+                                
+                                ctx.Response.ContentType = "application/json";
                                 ctx.Response.ContentLength64 = buf.Length;
                                 ctx.Response.OutputStream.Write(buf, 0, buf.Length);
                             }
-                            catch { }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.ToString());
+                             }
                             finally
                             {
                                 ctx.Response.OutputStream.Close();
+                                ctx.Response.Close();
                             }
                         }, _listener.GetContext());
                     }

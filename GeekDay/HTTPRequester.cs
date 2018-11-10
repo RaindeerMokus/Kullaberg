@@ -30,27 +30,31 @@ namespace GeekDay
             public int[] Numbers;
 
             public Fizunap(int pala, int rugo, int peasant) {
-                int lengthing = 3;
-                if (peasant == 0) {
-                    lengthing--;
-                }
-                if (rugo == 0) {
-                    lengthing--;
-                }
-                Names = new string[lengthing];
-                Numbers = new int[lengthing];
+                Names = new string[5];
+                Numbers = new int[5];
                 Names[0] = "Paladin";
-                Numbers[0] = pala;
+                Numbers[0] = pala - 4;
+                Names[1] = "Paladin";
+                Numbers[1] = 1;
+                Names[2] = "Paladin";
+                Numbers[2] = 1;
+                Names[3] = "Paladin";
+                Numbers[3] = 1;
+                Names[4] = "Paladin";
+                Numbers[4] = 1;
                 if (rugo >0) {
                     Names[1] = "Rogue";
                     Numbers[1] = rugo;
+                    Numbers[0]++;
                     if (peasant > 0) {
                         Names[2] = "Peasant";
                         Numbers[2] = peasant;
+                        Numbers[0]++;
                     }
                 } else if (peasant > 0) {
                     Names[1] = "Peasant";
                     Numbers[1] = peasant;
+                    Numbers[0]++;
                 }
             }
         }
@@ -69,9 +73,6 @@ namespace GeekDay
 
         public string SendResponse(HttpListenerRequest request)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(request.Url.ToString());
-            Console.ForegroundColor = ConsoleColor.Green;
             try
             {
                 List<string> spittedUrl = SplitUrl(request.Url.ToString());
