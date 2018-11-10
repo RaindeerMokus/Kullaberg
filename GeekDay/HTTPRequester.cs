@@ -34,11 +34,11 @@ namespace GeekDay
                 Numbers = new int[5];
                 Names[3] = "Paladin";
                 Numbers[3] = pala;
-                Names[4] = "Mage";
+                Names[4] = "Archmage";
                 Numbers[4] = magiszter;
                 Names[2] = "Rogue";
                 Numbers[2] = rugo;
-                Names[1] = "Elf";
+                Names[1] = "Goblin";
                 Numbers[1] = elf;
                 Names[0] = "Peasant";
                 Numbers[0] = peasant;
@@ -47,26 +47,30 @@ namespace GeekDay
 
         private string ApuOttEgyBenzinkut(string squadMoney) {
             int punci = int.Parse(squadMoney);
+            Console.WriteLine(punci);
             int punci2AkaAss = punci / 3;
-            punci -= punci2AkaAss;
+            punci -= (punci2AkaAss);
             int rugo = 1;
             punci -= 50;
-            int peasant = 1;
-            punci -= 20;
+            int elf = 1;
+            punci -= 40;
             int pala = punci / 600;
             punci -= pala*600;
             rugo += punci/50;
             punci -= (rugo-1)*50;
-            peasant += punci/20;
-            punci -= (peasant-1)*20;
+            elf += punci / 40;
+            punci -= (elf-1)*40;
 
-            int elf = 1;
-            punci2AkaAss -= 40;
             punci2AkaAss += punci;
+            punci = 0;
+            int peasant = 1;
+            punci2AkaAss -= 20;
             int magiszter = punci2AkaAss/700;
             punci2AkaAss -= magiszter*700;
-            elf += punci2AkaAss / 40;
-            punci2AkaAss -= (elf-1)*40;
+            peasant += punci2AkaAss/20;
+            punci2AkaAss -= (peasant-1)*20;
+            Console.WriteLine("p:" + pala + " am:" + magiszter + " r:" + rugo + " el:" + elf + " pf:" + peasant);
+            Console.WriteLine(punci + ":" + punci2AkaAss);
 
             return JsonConvert.SerializeObject(new Fizunap(pala, magiszter, rugo, elf, peasant));
         }
