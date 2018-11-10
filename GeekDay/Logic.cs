@@ -63,7 +63,8 @@ namespace GeekDay
                     int mini = 0;
                     foreach (int i in enemyUnitsID)
                     {
-                        int def = getUnitParameter(getDictByID(i), "Defense");
+                        var des = Deserializator(activeStatus[i.ToString()]["Unit"]);
+                        int def = (int)des["Defense"];
                         if (def < mindef) {
                             mindef = def;
                             mini = 0;
