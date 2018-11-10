@@ -34,13 +34,6 @@ namespace GeekDay
                 if (!again) ret.Add(a);
             }
             udpServer.Close();
-            foreach (Dictionary<string,object> item in ret)
-            {
-                foreach (object obj in item)
-                {
-                    Console.WriteLine(obj);
-                }
-            }
             return ret;
         }
 

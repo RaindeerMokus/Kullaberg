@@ -69,6 +69,20 @@ namespace GeekDay
             punci2AkaAss -= magiszter*700;
             peasant += punci2AkaAss/20;
             punci2AkaAss -= (peasant-1)*20;
+
+            punci2AkaAss += (peasant-1) * 20;
+            peasant = 1;
+            punci2AkaAss += (elf - 1) * 40;
+            elf = 1;
+            while (punci2AkaAss > 149) {
+                punci2AkaAss -= 50;
+                rugo += 1;
+            }
+            elf += punci2AkaAss / 40;
+            punci2AkaAss -= (elf-1)*40;
+            peasant += punci2AkaAss/20;
+            punci2AkaAss -= (peasant-1)*20;
+
             Console.WriteLine("p:" + pala + " am:" + magiszter + " r:" + rugo + " el:" + elf + " pf:" + peasant);
             Console.WriteLine(punci + ":" + punci2AkaAss);
 

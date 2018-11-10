@@ -14,20 +14,15 @@ namespace GeekDay
         List<int> frendlyUnitsID;
         List<int> enemyUnitsID;
         int activeId;
-        Dictionary<char,bool> palaMovedhasgedusten;
-        char[] cuccmák;
+        Dictionary<string,int[]> palaMovedhasgedusten;
+
         public Logic(int port)
         {
             this.port = port;
             activeStatus = new List<Dictionary<string, object>>();
             frendlyUnitsID = new List<int>();
             enemyUnitsID = new List<int>();
-            palaMovedhasgedusten = new Dictionary<char, bool>();
-            cuccmák = new char[4];
-            cuccmák[0] = '0';
-            cuccmák[1] = '1';
-            cuccmák[2] = '2';
-            cuccmák[3] = '3';
+            palaMovedhasgedusten = new Dictionary<string, int[]>();
 
         }
          void refres(string frendly, string enemy, string id)
@@ -40,29 +35,46 @@ namespace GeekDay
         public string Move(string frendly, string enemy, string id)
         {
             refres(frendly, enemy, id);
-            if (id[2] == '4')
-                return JsonConvert.SerializeObject(new Moveer(0, 0, enemyUnitsID[0]));
-            foreach (char ided in cuccmák) {
-                if (id[2] == ided && !palaMovedhasgedusten[ided]) {
-                    palaMovedhasgedusten[ided] = true;
-                    return JsonConvert.SerializeObject(new Moveer(9, int.Parse(ided.ToString())*2, -1));
+            Random rand = new Random();
+            if (id[0] == (frendlyUnitsID[0].ToString()[0])) {
+                if (id[2] == '4') {
+                    Console.WriteLine("magiszter geci");
+                    palaMovedhasgedusten[id] = new int[]{0,0};
+                    return JsonConvert.SerializeObject(new Moveer(0, 0, (enemyUnitsID[rand.Next(5)])));
                 }
-                if (id[2] == ided && palaMovedhasgedusten[ided]) {
-                    return JsonConvert.SerializeObject(new Moveer(9, int.Parse(ided.ToString())*2, enemyUnitsID[0]));
+                if (id[2] == '3') {
+                    Console.WriteLine("tápos négerpéló");
+                    palaMovedhasgedusten[id] = new int[]{7,6};
+                    return JsonConvert.SerializeObject(new Moveer(7, 6, 0));
+                }
+                if (id[2] == '2') {
+                    Console.WriteLine("seggbebaszosz sötétosz");
+                    palaMovedhasgedusten[id] = new int[]{6,2};
+                    return JsonConvert.SerializeObject(new Moveer(6, 2, 0));
+                }
+                if (id[2] == '1') {
+                    Console.WriteLine("rá se nézek baszod olyan ronda");
+                    palaMovedhasgedusten[id] = new int[]{7,3};
+                    return JsonConvert.SerializeObject(new Moveer(7, 3, 0));
+                }
+                if (id[2] == '0') {
+                    Console.WriteLine("na, ez meg köszönni akart, de csak a segge recsegett");
+                    palaMovedhasgedusten[id] = new int[]{8,0};
+                    return JsonConvert.SerializeObject(new Moveer(8, 0, 0));
                 }
             }
-            return JsonConvert.SerializeObject(new Moveer(0, 0, enemyUnitsID[0]));
+            return JsonConvert.SerializeObject(new Moveer(-1, -1, (enemyUnitsID[rand.Next(5)])));
 
         }
 
         public class Moveer {
             public int MoveX;
             public int MoveY;
-            public int AttackThis;
+            public string AttackThis;
             public Moveer(int moveX, int moveY, int attackThis) {
                 MoveX = moveX;
                 MoveY = moveY;
-                AttackThis = attackThis;
+                AttackThis = attackThis.ToString();
             }
         }
         
