@@ -72,25 +72,41 @@ namespace GeekDay
                 }
                 if (id[2] == '3') {
                     Console.WriteLine("tápos négerpéló");
+                    if (palaMovedhasgedusten[id] == mapperino.PointId(7,6)) {
+                        int enemid = enemies();
+                        return JsonConvert.SerializeObject(new Moveer(activeStatus[enemid.ToString()]["X"].ToString(), activeStatus[enemid.ToString()]["Y"].ToString(), enemid));
+                    }
                     palaMovedhasgedusten[id] = mapperino.PointId(7,6);
                     speeds[activeId] = 5;
-
+                    
                     return JsonConvert.SerializeObject(new Moveer(7, 6, 0));
                 }
                 if (id[2] == '2') {
                     Console.WriteLine("seggbebaszosz sötétosz");
+                    if (palaMovedhasgedusten[id] == mapperino.PointId(6,2)) {
+                        int enemid = enemies();
+                        return JsonConvert.SerializeObject(new Moveer(activeStatus[enemid.ToString()]["X"].ToString(), activeStatus[enemid.ToString()]["Y"].ToString(), enemid));
+                    }
                     palaMovedhasgedusten[id] = mapperino.PointId(6,2);
                     speeds[activeId] = 5;
                     return JsonConvert.SerializeObject(new Moveer(6, 2, 0));
                 }
                 if (id[2] == '1') {
                     Console.WriteLine("rá se nézek baszod olyan ronda");
+                    if (palaMovedhasgedusten[id] == mapperino.PointId(7,3)) {
+                        int enemid = enemies();
+                        return JsonConvert.SerializeObject(new Moveer(activeStatus[enemid.ToString()]["X"].ToString(), activeStatus[enemid.ToString()]["Y"].ToString(), enemid));
+                    }
                     palaMovedhasgedusten[id] = mapperino.PointId(7,3);
                     speeds[activeId] = 3;
                     return JsonConvert.SerializeObject(new Moveer(7, 3, 0));
                 }
                 if (id[2] == '0') {
                     Console.WriteLine("na, ez meg köszönni akart, de csak a segge recsegett");
+                    if (palaMovedhasgedusten[id] == mapperino.PointId(8,0)) {
+                        int enemid = enemies();
+                        return JsonConvert.SerializeObject(new Moveer(activeStatus[enemid.ToString()]["X"].ToString(), activeStatus[enemid.ToString()]["Y"].ToString(), enemid));
+                    }
                     palaMovedhasgedusten[id] = mapperino.PointId(8,0);
                     speeds[activeId] = 2;
                     return JsonConvert.SerializeObject(new Moveer(8, 0, 0));
@@ -100,6 +116,19 @@ namespace GeekDay
 
         }
 
+        public int enemies() {
+            var des = Deserializator(activeStatus[activeId.ToString()]["Unit"]);
+            var tár = mapperino.Fields(mapperino.PointId(int.Parse(activeStatus[activeId.ToString()]["X"].ToString()), int.Parse(activeStatus[activeId.ToString()]["Y"].ToString())), int.Parse(des["Speed"].ToString()));
+            Dictionary<int, int> támadható = new Dictionary<int, int>();
+            foreach (int item in enemyUnitsID)
+            {
+                var cucc = mapperino.PointId(int.Parse(activeStatus[item.ToString()]["X"].ToString()), int.Parse(activeStatus[item.ToString()]["Y"].ToString()));
+                if(tár.ContainsKey(cucc)) {
+                    támadható.Add(item, tár[cucc]);
+                }
+            }
+            return támadható.OrderBy(x => x.Value).Select(x => x.Key).FirstOrDefault();
+        }
         
 
         public class Moveer {
@@ -109,6 +138,11 @@ namespace GeekDay
             public Moveer(int moveX, int moveY, int attackThis) {
                 MoveX = moveX;
                 MoveY = moveY;
+                AttackThis = attackThis.ToString();
+            }
+            public Moveer(string moveX, string moveY, int attackThis) {
+                MoveX = int.Parse(moveX);
+                MoveY = int.Parse(moveY);
                 AttackThis = attackThis.ToString();
             }
         }
