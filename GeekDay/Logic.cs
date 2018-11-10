@@ -36,9 +36,10 @@ namespace GeekDay
         public string Move(string frendly, string enemy, string id)
         {
             refres(frendly, enemy, id);
+            show(frendly,enemy,id);
             foreach (var item in getDictByID(activeId))
             {
-                System.Console.WriteLine(item.Key + "-" + item.Value);
+               Console.WriteLine(item.Key + "-" + item.Value);
             }
             Random rand = new Random();
             if (id[0] == (frendlyUnitsID[0].ToString()[0])) {
@@ -88,7 +89,7 @@ namespace GeekDay
             {
                 foreach (var csirabutyok in item)
                 {
-                    if(csirabutyok.Key.Equals("ID") && csirabutyok.Value.Equals(id)) {
+                    if(csirabutyok.Key=="ID" && csirabutyok.Value.ToString()==id.ToString()) {
                         return item;
                     }
                 }
