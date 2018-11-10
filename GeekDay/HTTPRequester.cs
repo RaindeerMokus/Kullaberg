@@ -35,12 +35,10 @@ namespace GeekDay
         {
             try
             {
-                string req = ShowDatas(request);
-                if (req.Split('\n').Length == 1) {
-                    Console.WriteLine(ApuOttEgyBenzinkut);
-                    return ApuOttEgyBenzinkut(request.Headers.Get("squadMoney"));
-                } else {
-                    Console.WriteLine("GYÖGYŐ IDE ÍRHATSZ BASZOD OK?");
+                List<string> spittedUrl = SplitUrl(request.Url.ToString());
+                if (spittedUrl.Count == 1) {
+                    Console.WriteLine(ApuOttEgyBenzinkut(spittedUrl[0]));
+                    return ApuOttEgyBenzinkut(spittedUrl[0]);
                 }
                 else
                 {
