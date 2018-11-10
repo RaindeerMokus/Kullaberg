@@ -24,10 +24,10 @@ namespace GeekDay
             enemyUnitsID = new List<int>();
             palaMovedhasgedusten = new Dictionary<char, bool>();
             cuccmák = new char[4];
-            cuccmák[0] = '1';
-            cuccmák[1] = '2';
-            cuccmák[2] = '3';
-            cuccmák[3] = '4';
+            cuccmák[0] = '0';
+            cuccmák[1] = '1';
+            cuccmák[2] = '2';
+            cuccmák[3] = '3';
 
         }
          void refres(string frendly, string enemy, string id)
@@ -40,7 +40,7 @@ namespace GeekDay
         public string Move(string frendly, string enemy, string id)
         {
             refres(frendly, enemy, id);
-            if (id[2] == '0')
+            if (id[2] == '4')
                 return JsonConvert.SerializeObject(new Moveer(0, 0, enemyUnitsID[0]));
             foreach (char ided in cuccmák) {
                 if (id[2] == ided && !palaMovedhasgedusten[ided]) {
