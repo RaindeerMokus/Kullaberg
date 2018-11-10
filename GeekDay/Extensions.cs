@@ -14,5 +14,9 @@ namespace GeekDay
                 Console.WriteLine(item);
             }
         }
+        public static void ToConsole(this int ts)
+        {
+            Console.WriteLine(ts);
+        }
     }
 }

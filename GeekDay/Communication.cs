@@ -15,7 +15,6 @@ namespace GeekDay
         public static List<Dictionary<string, object>> UnitsValues(int port)
         {
             UdpClient udpServer = new UdpClient(port);
-            Console.ForegroundColor = ConsoleColor.Green;
             List<Dictionary<string, object>> ret = new List<Dictionary<string, object>>();
             bool again = false;
             while (!again)
@@ -34,6 +33,7 @@ namespace GeekDay
                 }
                 if (!again) ret.Add(a);
             }
+            udpServer.Close();
             return ret;
         }
 

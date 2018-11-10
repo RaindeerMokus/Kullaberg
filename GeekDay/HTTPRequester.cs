@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 
 namespace GeekDay
@@ -33,6 +34,9 @@ namespace GeekDay
 
         public string SendResponse(HttpListenerRequest request)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(request.Url.ToString());
+            Console.ForegroundColor = ConsoleColor.Green;
             try
             {
                 List<string> spittedUrl = SplitUrl(request.Url.ToString());
@@ -50,7 +54,12 @@ namespace GeekDay
             }
             catch (Exception e)
             {
-
+                using (StreamWriter sw = new StreamWriter("Error" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ".txt"))
+                {
+                    sw.WriteLine(e.ToString());
+                }
+                
+                
             }
             Console.WriteLine("!!!Got request!!!");
             return "";
