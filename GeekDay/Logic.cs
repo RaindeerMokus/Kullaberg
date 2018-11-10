@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -10,7 +11,7 @@ namespace GeekDay
     {
         int port;
         string[,] Map = new string[11, 9];
-        List<Dictionary<string, object>> activeStatus;
+        Dictionary<string, Dictionary<string, object>> activeStatus;
         List<int> frendlyUnitsID;
         List<int> enemyUnitsID;
         int activeId;
@@ -21,7 +22,7 @@ namespace GeekDay
         public Logic(int port)
         {
             this.port = port;
-            activeStatus = new List<Dictionary<string, object>>();
+            activeStatus = new Dictionary<string, Dictionary<string, object>>();
             frendlyUnitsID = new List<int>();
             enemyUnitsID = new List<int>();
             palaMovedhasgedusten = new Dictionary<string, int>();
@@ -31,7 +32,10 @@ namespace GeekDay
         {
             activeStatus = Communication.UnitsValues(6969);
             frendlyUnitsID = frendly.Split('|').Select(x=>int.Parse(x)).ToList();
-            enemyUnitsID= enemy.Split('|').Select(x => int.Parse(x)).ToList();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(enemy);
+            Console.ForegroundColor = ConsoleColor.White;
+            enemyUnitsID = enemy.Split('|').Select(x => int.Parse(x)).ToList();
             activeId = int.Parse(id);
             speeds = new Dictionary<int, int>();
         }
@@ -40,7 +44,12 @@ namespace GeekDay
             Dictionary<int, int> LetsMoveNow = new Dictionary<int, int>();
             refres(frendly, enemy, id);
             show(frendly,enemy,id);
-            foreach (var item in getDictByID(activeId))
+            var a = activeStatus[activeId.ToString()];
+            Console.WriteLine("---------");
+            Console.WriteLine(getSimpeDictionaryKey(a, "X"));
+            Console.WriteLine(getSimpeDictionaryKey(a, "Y"));
+            Console.WriteLine("---------");
+            foreach (var item in a)
             {
                Console.WriteLine(item.Key + "-" + item.Value);
             }
@@ -104,22 +113,10 @@ namespace GeekDay
                 AttackThis = attackThis.ToString();
             }
         }
-        
-        public Dictionary<string, object> getDictByID(int id) {
-            foreach (var item in activeStatus)
-            {
-                foreach (var csirabutyok in item)
-                {
-                    if(csirabutyok.Key=="ID" && csirabutyok.Value.ToString()==id.ToString()) {
-                        return item;
-                    }
-                }
-            }
-            return null;
-        }
 
-        public int getUnitPosition(Dictionary<string, object> unit) {
-            return 0;
+        public object getSimpeDictionaryKey(Dictionary<string, object> unit,string key)
+        {
+            return unit[key];
         }
 
         void show(string frendly, string enemy, string id)
@@ -137,6 +134,10 @@ namespace GeekDay
             Console.WriteLine();
             Console.WriteLine(activeId);
         }
- 
+        Dictionary<string, object> Deserializator(object obj)
+        {
+            StreamReader reader = new StreamReader(obj.ToString(), Encoding.Default);
+            return new JsonSerializer().Deserialize<Dictionary<string, object>>(new JsonTextReader(reader));
+        }
     }
 }
