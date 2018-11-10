@@ -45,10 +45,10 @@ namespace GeekDay
             foreach (char ided in cuccmák) {
                 if (id[2] == ided && !palaMovedhasgedusten[ided]) {
                     palaMovedhasgedusten[ided] = true;
-                    return JsonConvert.SerializeObject(new Moveer(9, int.Parse(id.ToString())*2, -1));
+                    return JsonConvert.SerializeObject(new Moveer(9, int.Parse(ided.ToString())*2, -1));
                 }
                 if (id[2] == ided && palaMovedhasgedusten[ided]) {
-                    return JsonConvert.SerializeObject(new Moveer(9, int.Parse(id.ToString())*2, enemyUnitsID[0]));
+                    return JsonConvert.SerializeObject(new Moveer(9, int.Parse(ided.ToString())*2, enemyUnitsID[0]));
                 }
             }
             return JsonConvert.SerializeObject(new Moveer(0, 0, enemyUnitsID[0]));

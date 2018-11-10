@@ -88,10 +88,6 @@ namespace GeekDay
             }
             catch (Exception e)
             {
-                // using (StreamWriter sw = new StreamWriter("Error" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ".txt"))
-                // {
-                //     sw.WriteLine(e.ToString());
-                // }
                 
                 
             }
