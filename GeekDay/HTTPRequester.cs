@@ -1,6 +1,11 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
 
 namespace GeekDay
 {
@@ -19,7 +24,37 @@ namespace GeekDay
             webServer.Stop();
         }
 
-        private String ApuOttEgyBenzinkut(string squadMoney) {
+        private class Fizunap {
+            public string[] Names;
+            public int[] Numbers;
+
+            public Fizunap(int pala, int rugo, int peasant) {
+                int lengthing = 3;
+                if (peasant == 0) {
+                    lengthing--;
+                }
+                if (rugo == 0) {
+                    lengthing--;
+                }
+                Names = new string[lengthing];
+                Numbers = new int[lengthing];
+                Names[0] = "Paladin";
+                Numbers[0] = pala;
+                if (rugo >0) {
+                    Names[1] = "Rogue";
+                    Numbers[1] = rugo;
+                    if (peasant > 0) {
+                        Names[2] = "Peasant";
+                        Numbers[2] = peasant;
+                    }
+                } else if (peasant > 0) {
+                    Names[1] = "Peasant";
+                    Numbers[1] = peasant;
+                }
+            }
+        }
+
+        private string ApuOttEgyBenzinkut(string squadMoney) {
             int punci = int.Parse(squadMoney);
             int pala = punci / 600;
             punci -= pala*600;
@@ -27,8 +62,8 @@ namespace GeekDay
             punci -= rugo*50;
             int peasant = punci/20;
             punci -= peasant*20;
-            return "{\n\t\"Names\": [\n\t\t\"Paladin\"" + (rugo > 0 ? ",\n\t\t\"Rogue\"":"") + (peasant > 0 ? ",\n\t\t\"Peasant\"":"") + "\n\t]," + 
-                "\n\t\"Numbers\": [" + "\n\t\t" + pala + (rugo > 0 ? (",\n\t\t" + rugo):"") + (peasant > 0 ? (",\n\t\t" + peasant):"") + "\n\t]\n}";
+
+            return JsonConvert.SerializeObject(new Fizunap(pala, rugo, peasant));
         }
 
         public string SendResponse(HttpListenerRequest request)
@@ -37,22 +72,19 @@ namespace GeekDay
             {
                 List<string> spittedUrl = SplitUrl(request.Url.ToString());
                 if (spittedUrl.Count == 1) {
-                    Console.WriteLine(ApuOttEgyBenzinkut(spittedUrl[0]));
                     return ApuOttEgyBenzinkut(spittedUrl[0]);
                 }
                 else
                 {
                     Logic logic = new Logic(6969);
                     var vs = SplitUrl(request.Url.ToString());
-                    logic.Move(vs[0],vs[1],vs[2]);
-
+                    return logic.Move(vs[0],vs[1],vs[2]);
                 }
             }
             catch (Exception e)
             {
-
+                Console.WriteLine(e.ToString());
             }
-            Console.WriteLine("!!!Got request!!!");
             return "";
         }
         List<string> SplitUrl(string url)

@@ -17,22 +17,28 @@ namespace GeekDay
             UdpClient udpServer = new UdpClient(port);
             Console.ForegroundColor = ConsoleColor.Green;
             List<Dictionary<string, object>> ret = new List<Dictionary<string, object>>();
-            bool again = false;
-            while (!again)
-            {
-                var remoteEP = new IPEndPoint(IPAddress.Any, port);
-                var data = udpServer.Receive(ref remoteEP);
-                StreamReader reader = new StreamReader(new MemoryStream(data), Encoding.Default);
-                Dictionary<string, object> a = new JsonSerializer().Deserialize<Dictionary<string, object>>(new JsonTextReader(reader));
-                foreach (var item in ret)
+            try {
+                bool again = false;
+                while (!again)
                 {
-                    if (item.Where(x => x.Key == "ID").FirstOrDefault().Value.ToString() == a.Where(x => x.Key == "ID").FirstOrDefault().Value.ToString())
+                    var remoteEP = new IPEndPoint(IPAddress.Any, port);
+                    var data = udpServer.Receive(ref remoteEP);
+                    StreamReader reader = new StreamReader(new MemoryStream(data), Encoding.Default);
+                    Dictionary<string, object> a = new JsonSerializer().Deserialize<Dictionary<string, object>>(new JsonTextReader(reader));
+                    foreach (var item in ret)
                     {
-                        again = true;
-                        break;
+                        if (item.Where(x => x.Key == "ID").FirstOrDefault().Value.ToString() == a.Where(x => x.Key == "ID").FirstOrDefault().Value.ToString())
+                        {
+                            again = true;
+                            break;
+                        }
                     }
+                    if (!again) ret.Add(a);
                 }
-                if (!again) ret.Add(a);
+            } catch (Exception e) {
+
+            } finally {
+                udpServer.Close();
             }
             return ret;
         }

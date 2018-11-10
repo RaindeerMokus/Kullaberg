@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,21 +28,21 @@ namespace GeekDay
             enemyUnitsID= enemy.Split('|').Select(x => int.Parse(x)).ToList();
             activeId = int.Parse(id);
         }
-        public void Move(string frendly, string enemy, string id)
+        public string Move(string frendly, string enemy, string id)
         {
             refres(frendly, enemy, id);
-            if (MYTURNMADAFAKA())
-            {
-
-            }
-            else
-            {
-                Console.WriteLine("EZ EGY BUZI JÁTÉK");
-            }
+            return JsonConvert.SerializeObject(new Moveer(2, 0, null));
         }
-        bool MYTURNMADAFAKA()
-        {
-            return frendlyUnitsID.Contains(activeId);
+
+        public class Moveer {
+            public int MoveX;
+            public int MoveY;
+            public string AttackThis;
+            public Moveer(int moveX, int moveY, string attackThis) {
+                MoveX = moveX;
+                MoveY = moveY;
+                AttackThis = attackThis;
+            }
         }
     }
 }

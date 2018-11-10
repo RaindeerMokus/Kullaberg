@@ -20,15 +20,7 @@ namespace GeekDay
 
         static void Main(string[] args)
         {
-            httpThread.Start();
-            foreach (Dictionary<string, object> item in Communication.UnitsValues(6969))
-            {
-                var a = item.Where(x => x.Key == "ID").Select(x => new { x.Key, x.Value });
-                var b = item.Where(x => x.Key == "Unit").Select(x => new { x.Key, x.Value });
-                a.ToConsole();
-                b.ToConsole();
-                Console.WriteLine();
-            }
+            HttpThread();
 
             Console.Read();
         }
