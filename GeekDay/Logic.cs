@@ -14,12 +14,21 @@ namespace GeekDay
         List<int> frendlyUnitsID;
         List<int> enemyUnitsID;
         int activeId;
+        Dictionary<char,bool> palaMovedhasgedusten;
+        char[] cuccmák;
         public Logic(int port)
         {
             this.port = port;
             activeStatus = new List<Dictionary<string, object>>();
             frendlyUnitsID = new List<int>();
             enemyUnitsID = new List<int>();
+            palaMovedhasgedusten = new Dictionary<char, bool>();
+            cuccmák = new char[4];
+            cuccmák[0] = '1';
+            cuccmák[1] = '2';
+            cuccmák[2] = '3';
+            cuccmák[3] = '4';
+
         }
          void refres(string frendly, string enemy, string id)
         {
@@ -31,7 +40,19 @@ namespace GeekDay
         public string Move(string frendly, string enemy, string id)
         {
             refres(frendly, enemy, id);
-            return JsonConvert.SerializeObject(new Moveer(0, 0, -1));
+            if (id[2] == '0')
+                return JsonConvert.SerializeObject(new Moveer(0, 0, enemyUnitsID[0]));
+            foreach (char ided in cuccmák) {
+                if (id[2] == ided && !palaMovedhasgedusten[ided]) {
+                    palaMovedhasgedusten[ided] = true;
+                    return JsonConvert.SerializeObject(new Moveer(9, int.Parse(id.ToString())*2, -1));
+                }
+                if (id[2] == ided && palaMovedhasgedusten[ided]) {
+                    return JsonConvert.SerializeObject(new Moveer(9, int.Parse(id.ToString())*2, enemyUnitsID[0]));
+                }
+            }
+            return JsonConvert.SerializeObject(new Moveer(0, 0, enemyUnitsID[0]));
+
         }
 
         public class Moveer {

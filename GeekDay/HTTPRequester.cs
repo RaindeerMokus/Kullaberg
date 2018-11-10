@@ -32,10 +32,10 @@ namespace GeekDay
             public Fizunap(int pala, int magiszter, int rugo, int elf, int peasant) {
                 Names = new string[5];
                 Numbers = new int[5];
-                Names[0] = "Paladin";
-                Numbers[0] = pala;
-                Names[1] = "Mage";
-                Numbers[1] = magiszter;
+                Names[1] = "Paladin";
+                Numbers[1] = pala;
+                Names[0] = "Mage";
+                Numbers[0] = magiszter;
                 Names[2] = "Rogue";
                 Numbers[2] = rugo;
                 Names[3] = "Elf";
@@ -88,10 +88,10 @@ namespace GeekDay
             }
             catch (Exception e)
             {
-                using (StreamWriter sw = new StreamWriter("Error" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ".txt"))
-                {
-                    sw.WriteLine(e.ToString());
-                }
+                // using (StreamWriter sw = new StreamWriter("Error" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ".txt"))
+                // {
+                //     sw.WriteLine(e.ToString());
+                // }
                 
                 
             }
