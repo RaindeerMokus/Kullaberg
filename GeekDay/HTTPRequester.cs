@@ -29,46 +29,46 @@ namespace GeekDay
             public string[] Names;
             public int[] Numbers;
 
-            public Fizunap(int pala, int rugo, int peasant) {
+            public Fizunap(int pala, int magiszter, int rugo, int elf, int peasant) {
                 Names = new string[5];
                 Numbers = new int[5];
                 Names[0] = "Paladin";
-                Numbers[0] = pala - 4;
-                Names[1] = "Paladin";
-                Numbers[1] = 1;
-                Names[2] = "Paladin";
-                Numbers[2] = 1;
-                Names[3] = "Paladin";
-                Numbers[3] = 1;
-                Names[4] = "Paladin";
-                Numbers[4] = 1;
-                if (rugo >0) {
-                    Names[1] = "Rogue";
-                    Numbers[1] = rugo;
-                    Numbers[0]++;
-                    if (peasant > 0) {
-                        Names[2] = "Peasant";
-                        Numbers[2] = peasant;
-                        Numbers[0]++;
-                    }
-                } else if (peasant > 0) {
-                    Names[1] = "Peasant";
-                    Numbers[1] = peasant;
-                    Numbers[0]++;
-                }
+                Numbers[0] = pala;
+                Names[1] = "Mage";
+                Numbers[1] = magiszter;
+                Names[2] = "Rogue";
+                Numbers[2] = rugo;
+                Names[3] = "Elf";
+                Numbers[3] = elf;
+                Names[4] = "Peasant";
+                Numbers[4] = peasant;
             }
         }
 
         private string ApuOttEgyBenzinkut(string squadMoney) {
             int punci = int.Parse(squadMoney);
+            int punci2AkaAss = punci / 3;
+            punci -= punci2AkaAss;
+            int rugo = 1;
+            punci -= 50;
+            int peasant = 1;
+            punci -= 20;
             int pala = punci / 600;
             punci -= pala*600;
-            int rugo = punci/50;
-            punci -= rugo*50;
-            int peasant = punci/20;
-            punci -= peasant*20;
+            rugo += punci/50;
+            punci -= (rugo-1)*50;
+            peasant += punci/20;
+            punci -= (peasant-1)*20;
 
-            return JsonConvert.SerializeObject(new Fizunap(pala, rugo, peasant));
+            int elf = 1;
+            punci2AkaAss -= 40;
+            punci2AkaAss += punci;
+            int magiszter = punci2AkaAss/700;
+            punci2AkaAss -= magiszter*700;
+            elf += punci2AkaAss / 40;
+            punci2AkaAss -= (elf-1)*40;
+
+            return JsonConvert.SerializeObject(new Fizunap(pala, magiszter, rugo, elf, peasant));
         }
 
         public string SendResponse(HttpListenerRequest request)
