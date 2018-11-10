@@ -32,16 +32,16 @@ namespace GeekDay
             public Fizunap(int pala, int magiszter, int rugo, int elf, int peasant) {
                 Names = new string[5];
                 Numbers = new int[5];
-                Names[1] = "Paladin";
-                Numbers[1] = pala;
-                Names[0] = "Mage";
-                Numbers[0] = magiszter;
+                Names[3] = "Paladin";
+                Numbers[3] = pala;
+                Names[4] = "Mage";
+                Numbers[4] = magiszter;
                 Names[2] = "Rogue";
                 Numbers[2] = rugo;
-                Names[3] = "Elf";
-                Numbers[3] = elf;
-                Names[4] = "Peasant";
-                Numbers[4] = peasant;
+                Names[1] = "Elf";
+                Numbers[1] = elf;
+                Names[0] = "Peasant";
+                Numbers[0] = peasant;
             }
         }
 
