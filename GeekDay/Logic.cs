@@ -28,14 +28,13 @@ namespace GeekDay
             palaMovedhasgedusten = new Dictionary<string, int>();
             mapperino = new MapV2(11,9);
         }
-         void refres(string frendly, string enemy, string id)
+        void refres(string frendly, string enemy, string id)
         {
             activeStatus = Communication.UnitsValues(6969);
-            frendlyUnitsID = frendly.Split('|').Select(x=>int.Parse(x)).ToList();
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(enemy);
-            Console.ForegroundColor = ConsoleColor.White;
-            enemyUnitsID = enemy.Split('|').Select(x => int.Parse(x)).ToList();
+            frendlyUnitsID = frendly.Split('|').Select(x => int.Parse(x)).ToList();
+            if(enemy!=""&& enemy !=null&&enemy.Length>0)
+                enemyUnitsID = enemy.Split('|').Select(x => int.Parse(x)).ToList();
+            else enemyUnitsID = new List<int>(); 
             activeId = int.Parse(id);
             speeds = new Dictionary<int, int>();
         }
@@ -44,15 +43,14 @@ namespace GeekDay
             Dictionary<int, int> LetsMoveNow = new Dictionary<int, int>();
             refres(frendly, enemy, id);
             show(frendly,enemy,id);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(activeId);
+            Console.ForegroundColor = ConsoleColor.White;
             var a = activeStatus[activeId.ToString()];
             Console.WriteLine("---------");
             Console.WriteLine(getSimpeDictionaryKey(a, "X"));
             Console.WriteLine(getSimpeDictionaryKey(a, "Y"));
             Console.WriteLine("---------");
-            foreach (var item in a)
-            {
-               Console.WriteLine(item.Key + "-" + item.Value);
-            }
             Random rand = new Random();
             if (id[0] == (frendlyUnitsID[0].ToString()[0])) {
                 if (id[2] == '4') {

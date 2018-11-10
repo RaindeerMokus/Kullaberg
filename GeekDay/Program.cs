@@ -15,7 +15,7 @@ namespace GeekDay
 
         static void HttpThread() {
             HTTPRequester hr = new HTTPRequester();
-            hr.Start("http://192.168.1.81:8080/");
+            hr.Start("http://192.168.1.79:8080/");
         }
 
         static void Main(string[] args)

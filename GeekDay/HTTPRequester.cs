@@ -112,6 +112,7 @@ namespace GeekDay
         }
         List<string> SplitUrl(string url)
         {
+            Console.WriteLine(url);
             List<string> ret = new List<string>();
             var values=  url.Split('?')[1].Split('&');
             foreach (var item in values)
