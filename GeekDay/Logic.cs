@@ -7,7 +7,41 @@ namespace GeekDay
 {
     class Logic
     {
+        int port;
         string[,] Map = new string[11, 9];
+        List<Dictionary<string, object>> activeStatus;
+        List<int> frendlyUnitsID;
+        List<int> enemyUnitsID;
+        int activeId;
+        public Logic(int port)
+        {
+            this.port = port;
+            activeStatus = new List<Dictionary<string, object>>();
+            frendlyUnitsID = new List<int>();
+            enemyUnitsID = new List<int>();
+        }
+        void refres(string frendly, string enemy, string id)
+        {
+            activeStatus = Communication.UnitsValues(6969);
+            frendlyUnitsID = frendly.Split('|').Select(x=>int.Parse(x)).ToList();
+            enemyUnitsID= enemy.Split('|').Select(x => int.Parse(x)).ToList();
+            activeId = int.Parse(id);
+        }
+        public void Move(string frendly, string enemy, string id)
+        {
+            refres(frendly, enemy, id);
+            if (MYTURNMADAFAKA())
+            {
 
+            }
+            else
+            {
+                Console.WriteLine("EZ EGY BUZI JÁTÉK");
+            }
+        }
+        bool MYTURNMADAFAKA()
+        {
+            return frendlyUnitsID.Contains(activeId);
+        }
     }
 }

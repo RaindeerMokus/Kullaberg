@@ -33,7 +33,8 @@ namespace GeekDay
 
         public string SendResponse(HttpListenerRequest request)
         {
-            try {
+            try
+            {
                 string req = ShowDatas(request);
                 if (req.Split('\n').Length == 1) {
                     Console.WriteLine(ApuOttEgyBenzinkut);
@@ -41,7 +42,16 @@ namespace GeekDay
                 } else {
                     Console.WriteLine("GYÖGYŐ IDE ÍRHATSZ BASZOD OK?");
                 }
-            } catch(Exception e) {
+                else
+                {
+                    Logic logic = new Logic(6969);
+                    var vs = SplitUrl(request.Url.ToString());
+                    logic.Move(vs[0],vs[1],vs[2]);
+
+                }
+            }
+            catch (Exception e)
+            {
 
             }
             Console.WriteLine("!!!Got request!!!");
