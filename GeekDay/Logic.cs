@@ -15,6 +15,7 @@ namespace GeekDay
         List<int> enemyUnitsID;
         int activeId;
         Dictionary<string,int[]> palaMovedhasgedusten;
+        MapV2 mapperino;
 
         public Logic(int port)
         {
@@ -23,7 +24,7 @@ namespace GeekDay
             frendlyUnitsID = new List<int>();
             enemyUnitsID = new List<int>();
             palaMovedhasgedusten = new Dictionary<string, int[]>();
-
+            mapperino = new MapV2(11,9);
         }
          void refres(string frendly, string enemy, string id)
         {
@@ -35,6 +36,10 @@ namespace GeekDay
         public string Move(string frendly, string enemy, string id)
         {
             refres(frendly, enemy, id);
+            foreach (var item in getDictByID(activeId))
+            {
+                System.Console.WriteLine(item.Key + "-" + item.Value);
+            }
             Random rand = new Random();
             if (id[0] == (frendlyUnitsID[0].ToString()[0])) {
                 if (id[2] == '4') {
@@ -78,6 +83,23 @@ namespace GeekDay
             }
         }
         
+        public Dictionary<string, object> getDictByID(int id) {
+            foreach (var item in activeStatus)
+            {
+                foreach (var csirabutyok in item)
+                {
+                    if(csirabutyok.Key.Equals("ID") && csirabutyok.Value.Equals(id)) {
+                        return item;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public int getUnitPosition(Dictionary<string, object> unit) {
+            return 0;
+        }
+
         void show(string frendly, string enemy, string id)
         {
             Console.WriteLine(frendly + "-" + enemy + "-" + id);
