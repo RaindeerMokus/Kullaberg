@@ -12,10 +12,10 @@ namespace GeekDay
 {
     public class Communication
     {
-        public static List<Dictionary<string, object>> UnitsValues(int port)
+        public static Dictionary<string, Dictionary<string, object>> UnitsValues(int port)
         {
             UdpClient udpServer = new UdpClient(port);
-            List<Dictionary<string, object>> ret = new List<Dictionary<string, object>>();
+            Dictionary<string,Dictionary<string, object>> ret = new Dictionary<string,Dictionary<string, object>>();
             bool again = false;
             while (!again)
             {
@@ -23,15 +23,10 @@ namespace GeekDay
                 var data = udpServer.Receive(ref remoteEP);
                 StreamReader reader = new StreamReader(new MemoryStream(data), Encoding.Default);
                 Dictionary<string, object> a = new JsonSerializer().Deserialize<Dictionary<string, object>>(new JsonTextReader(reader));
-                foreach (var item in ret)
-                {
-                    if (item.Where(x => x.Key == "ID").FirstOrDefault().Value.ToString() == a.Where(x => x.Key == "ID").FirstOrDefault().Value.ToString())
-                    {
-                        again = true;
-                        break;
-                    }
-                }
-                if (!again) ret.Add(a);
+
+                var key = a["ID"].ToString();
+                if (ret.Keys.Contains(key)) break;    
+                ret.Add(key,a);
             }
             udpServer.Close();
             return ret;
